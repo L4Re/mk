@@ -30,6 +30,9 @@ INSTALLDIR_BIN_LOCAL    ?= $(OBJ_BASE)/bin/$(MODE)
 else
   INSTALLDIR_BIN        ?= $(DROPS_STDDIR)/bin/$(BID_install_subdir_var)
   INSTALLDIR_BIN_LOCAL  ?= $(OBJ_BASE)/bin/$(BID_install_subdir_var)
+  ifneq ($(findstring $(BID_install_subdir_var),$(INSTALLDIR_BIN_LOCAL)),)
+    INSTALLDIR_LOCAL_BASE ?= $(subst $(BID_install_subdir_var),$(BID_install_subdir_base),$(INSTALLDIR_BIN_LOCAL))
+  endif
 endif
 
 ifeq ($(CONFIG_BID_STRIP_BINARIES),y)
@@ -42,7 +45,6 @@ endif
 
 INSTALLFILE              = $(INSTALLFILE_BIN)
 INSTALLDIR               = $(INSTALLDIR_BIN)
-INSTALLDIR_LOCAL_BASE    = $(OBJ_BASE)/bin/$(BID_install_subdir_base)
 INSTALLFILE_LOCAL        = $(INSTALLFILE_BIN_LOCAL)
 INSTALLDIR_LOCAL         = $(INSTALLDIR_BIN_LOCAL)
 

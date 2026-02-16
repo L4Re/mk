@@ -47,7 +47,7 @@ else
   else
     INSTALLDIR_BIN_LOCAL    = $(OBJ_BASE)/test/bin/$(BID_install_subdir_var)/$(TEST_GROUP)
   endif
-  INSTALLDIR_BIN_COV      = $(OBJ_BASE)/test/bin/$(BID_install_subdir_BASE)/std+cov/$(TEST_GROUP)
+  INSTALLDIR_BIN_COV      = $(OBJ_BASE)/test/bin/$(BID_install_subdir_base)/std+cov/$(TEST_GROUP)
   INSTALLDIR_TEST_LOCAL   = $(OBJ_BASE)/test/t/$(BID_install_subdir_base)/$(TEST_GROUP)
 endif
 

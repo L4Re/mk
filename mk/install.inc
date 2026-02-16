@@ -53,6 +53,8 @@ endef
 
 # generate local install rule for variant directory
 $(foreach t,$(INSTALL_TARGET), $(eval $(call local_install_rule,$(INSTALLDIR_LOCAL)/$t,$t)))
+
+ifneq ($(INSTALLDIR_LOCAL_BASE),)
 # generate local install rule for variant target in base directory
 $(foreach t,$(INSTALL_TARGET),                                                  \
   $(eval $(call local_install_rule,$(INSTALLDIR_LOCAL_BASE)/$t.$(VARIANT),$t)))
@@ -80,6 +82,7 @@ ifneq ($(IS_FIRST_COV),)
   # generate local install rule for default cov target in base directory
   $(foreach t,$(INSTALL_TARGET),                                           \
     $(eval $(call local_install_rule,$(INSTALLDIR_LOCAL_BASE)/$t.cov,$t)))
+endif
 endif
 
 else

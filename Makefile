@@ -398,12 +398,18 @@ $(KCONFIG_FILES): $(KCONFIG_FILE_PLATFORMS_DEPS_CURRENT)
 PKG_DIRS := $(call find_prj_dirs,$(SRC_DIR))
 PKG_KCONFIG_L4_FILES := $(wildcard $(addsuffix /Kconfig.L4,$(PKG_DIRS)))
 
+$(KCONFIG_FILE).packagedirs: FORCE
+	 $(VERBOSE)echo "# Automatically generated. Don't edit" >$@.tmp
+	 $(VERBOSE)echo "BID_PACKAGES = $(PKG_DIRS)" >>$@.tmp
+	 $(VERBOSE)$(call move_if_changed,$@,$@.tmp)
+
 # Cannot use $^ inside the $(KCONFIG_FILE) recipe to refer to its dependencies,
 # as this would include obsolete dependencies stored in $(KCONFIG_FILE_DEPS)
 # from the previous generation of it.
 KCONFIG_FILE_DEPS_CURRENT = $(KCONFIG_FILE_SRC) $(PKG_KCONFIG_L4_FILES) Makefile \
                             $(addsuffix /Control,$(PKG_DIRS)) \
-                            $(KCONFIGS_ARCH) $(L4DIR)/tool/bin/gen_kconfig
+                            $(KCONFIGS_ARCH) $(L4DIR)/tool/bin/gen_kconfig \
+                            $(KCONFIG_FILE).packagedirs
 
 $(KCONFIG_FILE): $(KCONFIG_FILE_DEPS_CURRENT) \
                  | $(KCONFIG_FILE).platform_types $(KCONFIG_FILE).platforms \
